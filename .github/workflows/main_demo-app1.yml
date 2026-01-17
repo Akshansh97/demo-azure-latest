@@ -1,4 +1,4 @@
-name: Build and Deploy Node backend to Azure
+name: Build and Deploy Node + React to Azure
 
 on:
   push:
@@ -18,15 +18,19 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies
+      # Install backend deps
+      - name: Install backend dependencies
         run: npm install
 
+      # Build frontend
       - name: Build frontend
         run: |
           cd frontend
           npm install
           npm run build
+          cd ..
 
+      # Deploy EVERYTHING (including frontend/dist)
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
