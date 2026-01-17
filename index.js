@@ -9,19 +9,19 @@ app.use(express.json());
 
 // API
 app.get('/api/greet', (req, res) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
 });
 
 // Serve React build
 const distPath = path.join(__dirname, 'dist');
 app.use(express.static(distPath));
 
-// SPA fallback
-app.get('*', (req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
+// Express 5 SPA fallback ✅
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
