@@ -12,15 +12,13 @@ app.get('/api/greet', (req, res) => {
     res.send('Hello World!');
 });
 
-// IMPORTANT: Azure path
-const frontendPath = path.join(__dirname, 'frontend', 'dist');
-
-// Static files
-app.use(express.static(frontendPath));
+// Serve React build
+const distPath = path.join(__dirname, 'dist');
+app.use(express.static(distPath));
 
 // SPA fallback
 app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
+    res.sendFile(path.join(distPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;

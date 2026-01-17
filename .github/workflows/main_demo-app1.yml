@@ -10,23 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # 2️⃣ Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "22"
 
-      - name: Install backend deps
+      # 3️⃣ Install backend dependencies
+      - name: Install backend dependencies
         run: npm install
 
+      # 4️⃣ Build frontend (Vite)
       - name: Build frontend
         run: |
           cd frontend
           npm install
           npm run build
           cd ..
+          rm -rf dist
+          mv frontend/dist dist
 
-      - name: Deploy to Azure
+      # 5️⃣ Deploy EVERYTHING to Azure
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: demo-app1
