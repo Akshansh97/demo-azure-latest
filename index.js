@@ -9,19 +9,21 @@ app.use(express.json());
 
 // API
 app.get('/api/greet', (req, res) => {
-  res.send('Hello World!');
+    res.send('Hello World!');
 });
 
-// Serve frontend static files
-const frontendPath = path.join(__dirname, 'frontend/dist');
+// IMPORTANT: Azure path
+const frontendPath = path.join(__dirname, 'frontend', 'dist');
+
+// Static files
 app.use(express.static(frontendPath));
 
-// React SPA fallback
+// SPA fallback
 app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
+    res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
